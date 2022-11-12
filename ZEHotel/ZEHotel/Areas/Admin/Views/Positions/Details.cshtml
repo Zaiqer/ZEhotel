@@ -1,0 +1,37 @@
+﻿@model Position
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-12">
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title font-weight-bold">Vəzifələr</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <h4>Adı: @Model.Name</h4>
+                <div>
+                    İşçilərin adı:
+                    @foreach (Employee item in ViewBag.Employees)
+                    {
+                        <div class="d-inline">@item.FullName, </div>
+                    }
+                </div>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary btn-md" asp-action="Edit" asp-route-id="@Model.Id">Düzəliş Et</a>
+                <a class="btn btn-secondary btn-md ml-3" asp-action="Index">Geri</a>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>

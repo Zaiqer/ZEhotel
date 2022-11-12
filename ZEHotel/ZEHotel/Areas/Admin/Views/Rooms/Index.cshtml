@@ -1,0 +1,121 @@
+﻿@model List<Room>
+
+<section class="content mt-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="d-flex justify-content-between align-content-center">
+                        <h2 class="card-title font-weight-bolder mt-4 ml-4">Otaqlar</h2>
+                        <a asp-action="Create" class="btn btn-primary mt-4 mr-4">Yeni</a>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Otağın Şəkilləri</th>
+                                    <th>Otağın Nömrəsi</th>
+                                    <th>Otağın Tipi</th>
+                                    <th>Otağın Vəziyyəti</th>
+                                    @*<th>Aktivlik</th>*@
+                                    <th>Fəaliyyətlər</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Room item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img style="object-fit: contain; width: 100px; height: 100px" src="~/assets/images/room/@item.RoomImages.FirstOrDefault().Image" />
+                                        </td>
+                                        <td>@item.Number</td>
+                                        <td>@item.RoomType.Name</td>
+                                        <th>
+                                            @if (item.CustomerId != null)
+                                            {
+                                                <div class="text-danger">
+                                                    Rezervdir
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="text-success">
+                                                    Rezerv deyil
+                                                </div>
+                                            }
+                                        </th>
+                                        @*<th>
+                                                @if (item.IsDeactive)
+                                                {
+                                                    <div class="text-danger">
+                                                        Deactive
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="text-success">
+                                                        Active
+                                                    </div>
+                                                }
+                                            </th>*@
+                                        <td>
+                                            <a asp-action="Details" asp-route-id="@item.Id">
+                                                <lord-icon src="https://cdn.lordicon.com/ncxoarcp.json"
+                                                           trigger="hover"
+                                                           colors="primary:#3080e8"
+                                                           state="hover"
+                                                           style="width:35px;height:35px">
+                                                </lord-icon>
+                                            </a>
+                                            <a asp-action="Edit" asp-route-id="@item.Id">
+                                                <lord-icon src="https://cdn.lordicon.com/hkkhwztk.json"
+                                                           colors="primary:#c7c116"
+                                                           trigger="hover"
+                                                           style="width:35px;height:35px">
+                                                </lord-icon>
+                                            </a>
+
+                                            <a asp-action="Delete" asp-route-id="@item.Id">
+                                                <lord-icon src="https://cdn.lordicon.com/jmkrnisz.json"
+                                                           trigger="morph"
+                                                           colors="primary:#e83a30"
+                                                           state="morph-fill"
+                                                           style="width:35px;height:35px">
+                                                </lord-icon>
+                                            </a>
+                                            @*@if (item.IsDeactive)
+                                                {
+                                                    <div class="text-danger d-inline mx-1">
+                                                        <a class="btn btn-outline-success btn-sm" asp-action="Activation" asp-route-id="@item.Id">Activate</a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="text-success d-inline mx-1">
+                                                        <a class="btn btn-outline-danger btn-sm" asp-action="Activation" asp-route-id="@item.Id">Deactivate</a>
+                                                    </div>
+                                                }*@
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script src="https://cdn.lordicon.com/pzdvqjsp.js"></script>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+}

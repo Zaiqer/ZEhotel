@@ -1,0 +1,116 @@
+﻿@model Room
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Düzəliş Et</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="d-flex justify-content-center">
+                        @if (Model.RoomImages.Count > 1)
+                        {
+                            foreach (RoomImage item in Model.RoomImages)
+                            {
+                                <div class="img-box mx-3">
+                                    <img style="width:200px; height:200px; object-fit:contain" src="~/assets/images/room/@item.Image" />
+                                    <div>
+                                        <a class="btn btn-danger del-img mx-5">Şəkli Sil</a>
+                                        <input type="hidden" value="@item.Id">
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            foreach (RoomImage item in Model.RoomImages)
+                            {
+                                <div class="img-box">
+                                    <img style="width:180px; height:180px; object-fit:contain" src="~/assets/images/room/@item.Image" />
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Photos">File input</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input asp-for="Photos" type="file" class="custom-file-input">
+                                <label asp-for="Photos" class="custom-file-label">Fayl Seç</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Number">Otaq Nömrəsi</label>
+                        <input asp-for="Number" class="form-control" placeholder="Otaq nömrəsi...">
+                        <span asp-validation-for="Number" class="alert-danger"></span>
+                    </div>
+                    @*<div class="form-group">
+                            <label asp-for="RoomType.Name">Otaq Tipi</label>
+                            <input asp-for="RoomType.Name" class="form-control" placeholder="Otaq tipi...">
+                            <span asp-validation-for="RoomType.Name" class="alert-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RoomType.Price">Otağın Qiyməti</label>
+                            <input asp-for="RoomType.Price" class="form-control" placeholder="Otağın qiyməti...">
+                            <span asp-validation-for="RoomType.Price" class="alert-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RoomType.Capacity">Otağın Həcmi</label>
+                            <input asp-for="RoomType.Capacity" class="form-control" placeholder="Otağın həcmi...">
+                            <span asp-validation-for="RoomType.Capacity" class="alert-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RoomType.Description">Otağın Təsviri</label>
+                            <input asp-for="RoomType.Description" class="form-control" placeholder="Otağın təsviri...">
+                            <span asp-validation-for="RoomType.Description" class="alert-danger"></span>
+                        </div>*@
+
+                    @*<div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>*@
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Təsdiq Et</button>
+                    <a asp-action="Index" class="btn btn-secondary">Geri</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(".del-img").click(function () {
+            let myImg = $(this);
+            if ($(".img-box").length > 1) {
+                $.ajax({
+                    url: "/Admin/Rooms/DeleteImage/",
+                    type: "get",
+                    data: {
+                        "imgId": myImg.next().val()
+                    },
+                    success: function (res) {
+                        myImg.parent().remove()
+                        if ($(".img-box").length == 1) {
+                            $(".del-img").remove()
+                        }
+                    }
+                })
+            }
+        });
+    </script>
+}

@@ -1,0 +1,62 @@
+﻿@model Room
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Yeni Otaq</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    @*<div class="form-group">
+                        <label asp-for="Photos">Fayl Seç</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input asp-for="Photos" class="custom-file-input">
+                                <label asp-for="Photos" class="custom-file-label">File input...</label>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <label asp-for="Photos" class="control-label"></label>
+                        <input asp-for="Photos" />
+                        <span asp-validation-for="Photos" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Number" class="control-label"></label>
+                        <input asp-for="Number" class="form-control" />
+                        <span asp-validation-for="Number" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Otaq Tipi Seçimi</label>
+                        <select class="form-control" name="typeId">
+                            @foreach (RoomType item in ViewBag.RoomTypes)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Təsdiq Et</button>
+                    <a asp-action="Index" class="btn btn-secondary ml-2">Geri</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
